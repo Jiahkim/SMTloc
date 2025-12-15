@@ -63,16 +63,14 @@ save([path fname '_trk_loc_ratio.mat'],'trk_loc_ratio')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%% Option for track visualization
+%%%%%%% [Option] for track visualization, choose inout= 1/2/3/4, in spk=1, in dna channel =2,  nucleoplasm =3, out of nuc =4
 
 l=cool(length(tracksFinal));
-
 for inout=2;%in spk=1, in dna channel =2,  nucleoplasm =3, out of nuc =4
     range=0.8;
     clear trk
     figure, imshow(nuc,[])
-  %  figure, imshow(Inew,[])
-   
+  %  figure, imshow(Inew,[])  
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%,,
     trk=find(trk_loc_ratio(:,inout)>=range); %outof spk
