@@ -2,39 +2,43 @@
 %Chromatin area.
 %c1_tracks_vis_innuc.m is optional to see tracks.
 %Next steps are c1_utrck_analysis _spkinout_dapi.m
-path='//Volumes/Extreme SSD/data/spt_2023/2023_0201_HCG116ESSiRHoechst_SPTWF/new_e/';
-fname='SUM_MAX_e1-HCG116ESSiRH_wf2s_1_(red)';
-img=uint16(imread([path fname '.tif'],1)); %need to be 16bits
-
-img_blur=imgaussfilt(img,2); %lets use uint16 up.
-T=adaptthresh(img_blur, 0.15);%0.07
-BW0dna = imbinarize(img_blur,T*0.7);%76);%76);%
-imshow(BW0dna,[])
+path='folder directory';
+fname='file name';
+level1=0.06; %To select chromatin-dense region
+level2=0.7; %To select nucleus area
+level3=0.7; %To select NS(speckle) area
+%%[DNA image]
+img=double(imread([path fname '.tif'],1)); % time-projection of DNA and NS
+level=0.6; %Adjust this level for sementation
+img_blur=imgaussfilt(img,0.5);
+T=adaptthresh(img_blur, level1);%0.07
+BW0dna = imbinarize(img_blur,T*level);%76);%76);%
+%imshow(BW0dna,[]) %This could be on/off to see segmented area.
 %%
 %%%%%%[Nuc boundary]%%%%%%%%%%%%%%%%%%%%%%
 % img_blur=imgaussfilt(uint16(img),2);
 % T=adaptthresh(img_blur, 0.005);%0.07
 % nuc_bd = imbinarize(img_blur,T*0.8);%76);%76);%63);
-    img_blur=imgaussfilt(uint8(img),2); %img= unint8
-    Tgr=graythresh(img_blur)
-    nuc_bd = imbinarize(img_blur,Tgr*1.1);
-    nuc_bd1 = bwareaopen(nuc_bd, 5000);
-    nuc_bd2=imfill(nuc_bd1, 'holes');
-    figure,imshow([nuc_bd1 nuc_bd2],[])
+img_blur=imgaussfilt(img,2);
+Tgr=graythresh(img_blur)
+nuc_bd = imbinarize(img_blur,Tgr*level2);imshow(nuc_bd)%1.1);
+nuc_bd1 = bwareaopen(nuc_bd, 5000);
+nuc_bd2=imfill(nuc_bd1, 'holes');
+figure,imshow([nuc_bd1 nuc_bd2],[])
 % %%alternative way1
 % BW0dna1 = imbinarize(img_blur,T*0.8);
 % remv =imfill(BW0dna1, 'holes');
 % nuc_bd2 = bwareaopen(remv, 5000);
 % imshow([remv nuc_bd2],[])
 %%
-%%%%%%[Map of Speckle]%%%%%%%%%%%%%%%%%%%%%%
+%%[Speckle image]%%%%%%%%%%%%%%%%%%%%%%
 %img0 = double format
-img0=double(imread([path 'SUM_MAX_e2-HCG116ESSiRH_wf2s_2_(green).tif']));
+img0=double(imread([path fname '.tif']),2);
 spk1 = imadjust(rescale(rescale(imgaussfilt(img0,0.5)),[0 0.4]),[],[],1.2);
 SENSITIVITY=0.5;%0.05; %0.1 %increse SENSITIVITY, detect background signals& broad spk area.
 T=adaptthresh(spk1, SENSITIVITY);
-BW0spk = imbinarize(spk1,T*1.2);%78);%0.85
-BW1spk=imfill(BW0spk, 'holes');
+BW0spk = imbinarize(spk1,T*level3);%78);%0.85
+BW1spk=imfill(BW0spk, 'holes');imshow(BW1spk,[])
 BW1spk(find(nuc_bd2==0))=0;
 BW2spk = bwareaopen(BW1spk, 5);
 imshow(BW2spk,[])
