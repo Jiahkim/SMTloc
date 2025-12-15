@@ -1,4 +1,7 @@
-
+%Need data " trk_loc_ratio", "tracksFinal"
+%Assign trackslongerthan (lenth of tracks), inout (nuclear region)
+%This m-file generates histograme of per-frame displacement that you can
+%export for fitting to extract Diffusion coefficient.
 %%%%%%%%%%%%%%%%%%%%%%
 %figure, imshow(Inew,[])
 %%
@@ -6,14 +9,6 @@ trackslongerthan=2;
 for inout=1:3 %in spk=1, in dna channel =2,  nucleoplasm =3, out of nuc =4
     clearvars -except tracksFinal trk_loc_ratio path inout trackslongerthan
     
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    inout=1
-    if inout==1
-    range = 1 ;
-    else range = 0.7;
-    end
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     trk=find(trk_loc_ratio(:,inout)>=range); %outof spk
     msd_coll=nan(500, length(trk));
     %trk=find(trk_loc_ratio(:,1)==1); %in spk
@@ -78,3 +73,4 @@ for inout=1:3 %in spk=1, in dna channel =2,  nucleoplasm =3, out of nuc =4
    % save([path 'DiffCoef_coll' num2str(inout) '.mat'], 'DiffCoef_coll') 
    
 end    
+%%
