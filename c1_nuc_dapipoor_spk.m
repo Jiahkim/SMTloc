@@ -1,18 +1,16 @@
-%This is to make a binary image (segmentationf) of NS, Interchromatin,
+%This m-file is to make a segemented image of NS, Interchromatin,
 %Chromatin area.
-%c1_tracks_vis_innuc.m is optional to see tracks.
-%Next steps are c1_utrck_analysis _spkinout_dapi.m
+%Next m-file to use "c2_track_loc.m" that sort tracks based on this segmented image.
 path='folder directory';
 fname='file name';
-level1=0.06; %To select chromatin-dense region
+level1=0.6; %To select chromatin-dense region
 level2=0.7; %To select nucleus area
 level3=0.7; %To select NS(speckle) area
 %%[DNA image]
 img=double(imread([path fname '.tif'],1)); % time-projection of DNA and NS
-level=0.6; %Adjust this level for sementation
 img_blur=imgaussfilt(img,0.5);
-T=adaptthresh(img_blur, level1);%0.07
-BW0dna = imbinarize(img_blur,T*level);%76);%76);%
+T=adaptthresh(img_blur, 0.06);%0.07
+BW0dna = imbinarize(img_blur,T*level1);%76);%76);%
 %imshow(BW0dna,[]) %This could be on/off to see segmented area.
 %%
 %%%%%%[Nuc boundary]%%%%%%%%%%%%%%%%%%%%%%
