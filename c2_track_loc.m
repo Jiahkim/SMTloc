@@ -50,7 +50,7 @@ for i5=1:last %length(tracksFinal)
         trk_loc_ratio(i5,2) = sum(location==200)/length(location);
         trk_loc_ratio(i5,3) = sum(location==100)/length(location);
         trk_loc_ratio(i5,4) = sum(location==0)/length(location);
-          % 0 =out of cell, 100 =in spk, 190 = nucleoplasm.
+          % 0 =out of cell, 290 =in spk, 200 = Interchromatin. 100 = Chromatin-dense region
           %imshow(test_spk_in_nuc,[])
         
  
