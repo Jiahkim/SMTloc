@@ -3,8 +3,7 @@
 % Inputdata= "nuc" This is output of c1_nuc_dapipoor_spk.m, and
 %%%"tracksFinal" This is output of UTrack.
 %%%%%%DRAW tracks
-tlapse=0.01; %sec
-trackslongerthan=2;
+trackslongerthan=2; % change this to select minimum length of track 
 last=length(tracksFinal);
 
 total_d1=nan(length(tracksFinal),1);
